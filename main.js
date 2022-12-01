@@ -29,6 +29,10 @@ const submitFilter = document.getElementById("search-btn2");
 submitFilter.addEventListener("click",(e) => {
     e.preventDefault();
     const elementHTML = document.getElementById("name-input-filter").value;
-    const lookFor = pokemones.find(element => element.name == elementHTML);
-    console.log(lookFor);
+    const lookFor = pokemones.find(element => element.name.length >= Number(elementHTML));
+    if(lookFor){
+        alert(`${lookFor.name} tiene más de ${elementHTML} caracteres`);
+    }else{
+        alert(`No hay pokemon de más de ${elementHTML} caracteres`);
+    }
 });
