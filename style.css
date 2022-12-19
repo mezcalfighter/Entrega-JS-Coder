@@ -282,7 +282,7 @@
     background-color: var(--main-screen-bg-color);
     border: solid black 2px;
     border-radius: 5%;
-    background-image: url(https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png);
+    /*background-image: url(https://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png);*/
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -355,7 +355,7 @@
     width: 100%;
     font-family: 'Press Start 2P', cursive;
     text-align: center;
-    font-size: 8.5px;
+    font-size: 7px;
     overflow-wrap: break-word;
   }
   
