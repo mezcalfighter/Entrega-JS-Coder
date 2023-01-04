@@ -1,45 +1,59 @@
 class Pokemon{
-    constructor(id,name){
+    constructor(id,name,sprites){
         this.id = id;
         this.name = name;
+        this.sprites = sprites
     }
 }
 
-let bulbasaur = new Pokemon(1,"Bulbasaur");
-let charmander = new Pokemon(4,"Charmander");
-let squirtle = new Pokemon(7,"Squirtle");
-
-let pokemones = [bulbasaur, charmander, squirtle, bulbasaur];
-
-if(localStorage.key("lookFor")){
-    let lookForJSON = localStorage.getItem("lookFor");
-    let lookFor = JSON.parse(lookForJSON);
-    const nameScreen = document.getElementById("name-screen");
-    const mainScreen = document.getElementById("main-screen");
-    nameScreen.innerText = `${lookFor.name}`;
-    mainScreen.style.backgroundImage = `url(https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${lookFor.id}.png)`;
-}
+let pokemon = new Pokemon()
 
 // Find
 const submitSearch = document.getElementById("search-btn");
 submitSearch.addEventListener("click",(e) => {
     e.preventDefault();
     const elementHTML = document.getElementById("name-input").value;
-    const lookFor = pokemones.find(element => element.name == elementHTML);
+    let pokemonAPI = `https://pokeapi.co/api/v2/pokemon/${elementHTML.toLowerCase()}`
     const nameScreen = document.getElementById("name-screen");
     const mainScreen = document.getElementById("main-screen");
-    if(lookFor){
-        localStorage.setItem("lookFor",JSON.stringify(lookFor));
-        nameScreen.innerText = `${lookFor.name}`;
-        mainScreen.style.backgroundImage = `url(https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${lookFor.id}.png)`;
-    }else{
-        nameScreen.innerText = "NOT FOUND"
-        mainScreen.style.removeProperty("background-image");
-        localStorage.clear();
-    }
+    fetch(pokemonAPI)
+        .then((response)=>response.json())
+        .then((data) => {
+            pokemon.id = data.id
+            pokemon.name = data.name
+            pokemon.sprites = data.sprites.front_default
+            localStorage.setItem("pokemonStorage",JSON.stringify(pokemon));
+            InsertPokemon(pokemon)
+        })
+        .catch((error) => {
+            Swal.fire({
+                title: 'Pokemon no encontrado',
+                text: `Referencia ${error}`,
+                icon: 'error',
+                confirmButtonText: 'Acceptar',
+                backdrop: "#808080"
+            })
+            nameScreen.innerText = "NOT FOUND"
+            console.log(`Error: ${elementHTML}`)
+            mainScreen.style.removeProperty("background-image");
+            localStorage.clear();
+        })
 });
 
 
+if(localStorage.key("pokemonStorage")){
+    let pokemonJSON = localStorage.getItem("pokemonStorage");
+    let pokemon = JSON.parse(pokemonJSON);
+    InsertPokemon(pokemon);
+}
+
+function InsertPokemon(pokemon){
+    console.log(`Insert: ${pokemon}`)
+    const nameScreen = document.getElementById("name-screen");
+    const mainScreen = document.getElementById("main-screen");
+    nameScreen.innerText = `${pokemon.name}`;
+    mainScreen.style.backgroundImage = `url(${pokemon.sprites})`;
+}
 
 // Filter - REMOVED
 // const submitFilter = document.getElementById("search-btn2");
