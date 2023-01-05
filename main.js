@@ -10,6 +10,11 @@ class Pokemon{
 }
 
 let pokemon = new Pokemon()
+const nameScreen = document.getElementById("name-screen");
+const mainScreen = document.getElementById("main-screen");
+const aboutScreen = document.getElementById("about-screen");
+const idScreen = document.getElementById("id-screen");
+const typeScreen = document.getElementById("type-screen");
 
 // Find
 const submitSearch = document.getElementById("search-btn");
@@ -32,11 +37,6 @@ if(localStorage.key("pokemonStorage")){
 }
 
 function InsertPokemon(pokemon){
-    const nameScreen = document.getElementById("name-screen");
-    const mainScreen = document.getElementById("main-screen");
-    const aboutScreen = document.getElementById("about-screen");
-    const idScreen = document.getElementById("id-screen");
-    const typeScreen = document.getElementById("type-screen");
     nameScreen.innerText = `${pokemon.name}`;
     aboutScreen.innerText = `Height: ${pokemon.height * 10}cm Weight: ${pokemon.weight / 10}kg`
     idScreen.innerText = `# ${pokemon.id}`
@@ -71,7 +71,9 @@ function GetPokemon(){
                 backdrop: "#808080"
             })
             nameScreen.innerText = "NOT FOUND"
-            console.log(`Error: ${elementHTML}`)
+            aboutScreen.innerText = `Height: N/A  Weight: N/A`
+            idScreen.innerText = `# N/A`
+            typeScreen.innerText = `N/A`
             mainScreen.style.removeProperty("background-image");
             localStorage.clear();
         })
