@@ -48,7 +48,6 @@ if(localStorage.key("pokemonStorage")){
 }
 
 function InsertPokemon(pokemon){
-    console.log(`Insert: ${pokemon}`)
     const nameScreen = document.getElementById("name-screen");
     const mainScreen = document.getElementById("main-screen");
     nameScreen.innerText = `${pokemon.name}`;

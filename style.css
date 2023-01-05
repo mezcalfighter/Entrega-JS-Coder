@@ -45,7 +45,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    background-color: var(--secondary-bg-color);
+    background-color: #585858;
   }
   
   .logo {
